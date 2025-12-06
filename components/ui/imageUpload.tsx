@@ -1,15 +1,20 @@
 "use client";
 import React, { useState, useRef } from "react";
 import Image from "next/image";
+import { X } from "lucide-react";
 
 interface ImageUploadProps {
   onChange?: (file: File | null) => void;
   defaultImage?: string;
+  height: number;
+  width: number;
 }
 
 export default function ImageUpload({
   onChange,
   defaultImage,
+  height,
+  width,
 }: ImageUploadProps) {
   const [preview, setPreview] = useState<string | null>(defaultImage || null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -41,7 +46,11 @@ export default function ImageUpload({
   return (
     <div
       onClick={handleClick}
-      className="relative w-40 h-40 border-2 border-dashed border-gray rounded-lg cursor-pointer hover:border-primary flex items-center justify-center bg-background"
+      className="relative border border-dashed border-[#9DB29D] rounded-2xl cursor-pointer flex items-center justify-center bg-[#EAF2EA]"
+      style={{
+        height,
+        width,
+      }}
     >
       <input
         ref={fileInputRef}
@@ -61,27 +70,20 @@ export default function ImageUpload({
           />
           <button
             onClick={handleRemove}
-            className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600"
+            className="absolute top-2 right-2 bg-[#b0c1b1] text-[#3A643C] rounded-full w-5 h-5 flex items-center justify-center"
           >
-            ×
+            <X className="w-3 h-3" />
           </button>
         </>
       ) : (
-        <div className="flex flex-col items-center justify-center text-gray">
-          <svg
-            className="w-12 h-12 mb-2"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 4v16m8-8H4"
-            />
-          </svg>
-          <span className="text-sm">Upload Image</span>
+        <div className="flex flex-col items-center justify-center gap-2">
+          <Image
+            src={"/images/image-upload-icon.svg"}
+            alt="img-upload"
+            width={24}
+            height={24}
+          />
+          <span className="text-xs font-medium">Upload Image</span>
         </div>
       )}
     </div>
