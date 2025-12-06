@@ -126,7 +126,7 @@ export default function Sidebar() {
           <div key={item.id}>
             <Link
               href={item.href || "#"}
-              className={`px-4 py-3 flex gap-1.5 items-center cursor-pointer hover:bg-gray/10 rounded-md transition-colors ${
+              className={`px-4 py-3 flex gap-1.5 items-center cursor-pointer hover:bg-gray/10 rounded-md ${
                 isSubMenuActive(item.subMenu)
                   ? " bg-background"
                   : isActive(item.href)
