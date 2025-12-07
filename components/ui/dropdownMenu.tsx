@@ -17,7 +17,7 @@ export default function IngredientDropdownMenu({
   onToggleStatus,
 }: DropdownMenuProps) {
   return (
-    <DropdownMenu.Root>
+    <DropdownMenu.Root modal={false}>
       <DropdownMenu.Trigger asChild>
         <button
           className="inline-flex items-center justify-center w-10 h-10 rounded-lg hover:bg-gray/10 focus:outline-none"

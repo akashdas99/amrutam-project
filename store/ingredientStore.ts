@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import { persist, createJSONStorage } from "zustand/middleware";
 import { OverviewFormData } from "@/components/add-ingredient-steps/overview";
 import { useMulti } from "@/hooks/useMulti";
 
@@ -10,23 +9,15 @@ interface IngredientState {
   clearIngredient: () => void;
 }
 
-export const useIngredientStore = create<IngredientState>()(
-  persist(
-    (set) => ({
-      ingredient: {},
-      setIngredient: (ingredient) => set({ ingredient }),
-      updateIngredient: (data) =>
-        set((state) => ({
-          ingredient: { ...state.ingredient, ...data },
-        })),
-      clearIngredient: () => set({ ingredient: {} }),
-    }),
-    {
-      name: "ingredient-storage",
-      storage: createJSONStorage(() => localStorage),
-    }
-  )
-);
+export const useIngredientStore = create<IngredientState>((set) => ({
+  ingredient: {},
+  setIngredient: (ingredient) => set({ ingredient }),
+  updateIngredient: (data) =>
+    set((state) => ({
+      ingredient: { ...state.ingredient, ...data },
+    })),
+  clearIngredient: () => set({ ingredient: {} }),
+}));
 export const useIngredientStoreSelector = <K extends keyof IngredientState>(
   ...keys: K[]
 ): Pick<IngredientState, K> => {

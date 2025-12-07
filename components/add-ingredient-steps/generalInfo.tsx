@@ -37,7 +37,6 @@ export default function GeneralInfo({ ref }: GeneralInfoProps) {
     description: ingredient?.description,
     image: ingredient?.image,
   };
-
   const {
     register,
     handleSubmit,
@@ -60,7 +59,6 @@ export default function GeneralInfo({ ref }: GeneralInfoProps) {
       submitForm: handleSubmit((data) => {
         updateIngredient(data);
         nextStep();
-        console.log(data);
       }),
     }),
     []

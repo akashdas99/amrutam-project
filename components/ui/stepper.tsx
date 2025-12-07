@@ -22,7 +22,7 @@ export default function Stepper({
 }: StepperProps) {
   const { step: currentStep } = useStepStoreSelector("step");
   return (
-    <div className="flex items-center w-[70%] mx-auto mb-9.5">
+    <div className="flex items-center justify-between w-[70%] mx-auto mb-9.5">
       {Array.from({ length: totalSteps }, (_, index) => {
         const stepNumber = index + 1;
         const isActive = stepNumber === currentStep;
@@ -62,7 +62,7 @@ export default function Stepper({
               </span>
             </div>
             {stepNumber < totalSteps && (
-              <div className={cn("h-0.5 w-[150px] bg-gray")} />
+              <div className={cn("h-0.5 w-[25%] bg-gray")} />
             )}
           </React.Fragment>
         );
