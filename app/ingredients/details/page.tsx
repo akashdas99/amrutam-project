@@ -10,9 +10,7 @@ export default function IngredientDetails() {
           { label: "Ingredient Details" },
         ]}
       />
-      <div className="flex justify-center gap-4 mt-5">
-        <Overview />
-      </div>
+      <Overview showMenu />
     </div>
   );
 }
