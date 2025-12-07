@@ -14,7 +14,7 @@ import { useRef, useState } from "react";
 
 export default function IngredientsAdd() {
   const ref = useRef<{ submitForm: () => void }>(null);
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(4);
 
   const { updateIngredient } = useIngredientStoreSelector("updateIngredient");
   const onSubmit = (data: Partial<OverviewFormData>) => {
@@ -40,16 +40,20 @@ export default function IngredientsAdd() {
       <Stepper currentStep={step + 1} />
       {steps[step]}
       <div className="flex justify-center gap-4 mt-5">
-        <Button onClick={() => ref?.current?.submitForm()}>Save</Button>
-        <Button
-          variant={"ghost"}
-          type="submit"
-          onClick={() => {
-            ref?.current?.submitForm();
-          }}
-        >
-          Next
+        <Button onClick={() => ref?.current?.submitForm()}>
+          {step < 4 ? "Save" : "Submit"}
         </Button>
+        {step < 4 && (
+          <Button
+            variant={"ghost"}
+            type="submit"
+            onClick={() => {
+              ref?.current?.submitForm();
+            }}
+          >
+            Next
+          </Button>
+        )}
       </div>
     </div>
   );
