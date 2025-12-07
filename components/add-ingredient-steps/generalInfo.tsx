@@ -83,7 +83,13 @@ export default function GeneralInfo({
         {...register("description")}
         error={errors.description?.message}
       />
-      <ImageUpload width={220} height={220} name="image" control={control} />
+      <ImageUpload
+        width={220}
+        height={220}
+        name="image"
+        control={control}
+        error={errors?.image?.message}
+      />
     </form>
   );
 }

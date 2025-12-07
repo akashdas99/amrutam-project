@@ -138,19 +138,14 @@ export default function Others({ onSubmit, ref, initialData }: OthersProps) {
 
           <div className="border-t border-light-gray"></div>
           {fields.map((field, index) => (
-            <>
-              <div key={`${field.id}-type`} className="flex gap-2">
-                <p className="text-sm flex-1 text-gray">
-                  {getValues(`plantParts.${index}.plantPart`)}
-                </p>
-                <p
-                  key={`${field.id}-desc`}
-                  className="text-sm flex-3 text-gray"
-                >
-                  {getValues(`plantParts.${index}.description`)}
-                </p>
-              </div>
-            </>
+            <div key={`${field.id}-type`} className="flex gap-2">
+              <p className="text-sm flex-1 text-gray">
+                {getValues(`plantParts.${index}.plantPart`)}
+              </p>
+              <p key={`${field.id}-desc`} className="text-sm flex-3 text-gray">
+                {getValues(`plantParts.${index}.description`)}
+              </p>
+            </div>
           ))}
         </div>
       )}
