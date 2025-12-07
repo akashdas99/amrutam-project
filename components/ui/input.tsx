@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import React from "react";
 
 interface InputProps extends React.ComponentProps<"input"> {
@@ -29,13 +30,14 @@ export default function Input({
         )}
         <input
           id={inputId}
-          className={`w-full px-4 py-3 border-2 border-light-gray rounded-md focus:outline-none text-xs ${
-            error ? "border-danger" : ""
-          } ${className}`}
+          className={cn(
+            `w-full px-4 py-3 border-2 border-light-gray rounded-md focus:outline-none text-xs `,
+            className
+          )}
           {...props}
         />
       </div>
-      {error && <span className="text-sm text-danger">{error}</span>}
+      {error && <span className="text-xs text-danger">{error}</span>}
     </div>
   );
 }
