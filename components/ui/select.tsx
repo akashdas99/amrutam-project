@@ -35,7 +35,7 @@ export default function Select<T extends FieldValues>({
       control={control}
       name={name}
       render={({ field: { onChange, onBlur, value, ref } }) => (
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1 flex-1">
           <div className="relative">
             {label && (
               <label

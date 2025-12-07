@@ -125,69 +125,57 @@ export default function Benefits({
 
       <div className="flex flex-col gap-4">
         <div className="flex gap-4 items-center">
-          <div className="w-[280px]">
-            <Select
-              name="prakritiImpact.vata"
-              control={control}
-              options={IMPACT_OPTIONS.map((option) => ({
-                value: option,
-                label: option,
-              }))}
-              label="Vata"
-              required
-              error={errors.prakritiImpact?.vata?.message}
-            />
-          </div>
-          <div className="w-[280px]">
-            <Select
-              name="prakritiImpact.pitta"
-              control={control}
-              options={IMPACT_OPTIONS.map((option) => ({
-                value: option,
-                label: option,
-              }))}
-              label="Pitta"
-              required
-              error={errors.prakritiImpact?.pitta?.message}
-            />
-          </div>
-          <div className="w-[280px]">
-            <Select
-              name="prakritiImpact.kapha"
-              control={control}
-              options={IMPACT_OPTIONS.map((option) => ({
-                value: option,
-                label: option,
-              }))}
-              label="Kapha"
-              required
-              error={errors.prakritiImpact?.kapha?.message}
-            />
-          </div>
+          <Select
+            name="prakritiImpact.vata"
+            control={control}
+            options={IMPACT_OPTIONS.map((option) => ({
+              value: option,
+              label: option,
+            }))}
+            label="Vata"
+            required
+            error={errors.prakritiImpact?.vata?.message}
+          />
+          <Select
+            name="prakritiImpact.pitta"
+            control={control}
+            options={IMPACT_OPTIONS.map((option) => ({
+              value: option,
+              label: option,
+            }))}
+            label="Pitta"
+            required
+            error={errors.prakritiImpact?.pitta?.message}
+          />
+          <Select
+            name="prakritiImpact.kapha"
+            control={control}
+            options={IMPACT_OPTIONS.map((option) => ({
+              value: option,
+              label: option,
+            }))}
+            label="Kapha"
+            required
+            error={errors.prakritiImpact?.kapha?.message}
+          />
         </div>
 
         <div className="flex gap-4 items-start">
-          <div className="w-[280px]">
-            <Input
-              label="Vata Reason"
-              {...register("prakritiImpact.vataReason")}
-              error={errors.prakritiImpact?.vataReason?.message}
-            />
-          </div>
-          <div className="w-[280px]">
-            <Input
-              label="Pitta Reason"
-              {...register("prakritiImpact.pittaReason")}
-              error={errors.prakritiImpact?.pittaReason?.message}
-            />
-          </div>
-          <div className="w-[280px]">
-            <Input
-              label="Kapha Reason"
-              {...register("prakritiImpact.kaphaReason")}
-              error={errors.prakritiImpact?.kaphaReason?.message}
-            />
-          </div>
+          <Input
+            label="Vata Reason"
+            {...register("prakritiImpact.vataReason")}
+            error={errors.prakritiImpact?.vataReason?.message}
+          />
+          <Input
+            label="Pitta Reason"
+            {...register("prakritiImpact.pittaReason")}
+            error={errors.prakritiImpact?.pittaReason?.message}
+          />
+          <Input
+            label="Kapha Reason"
+            {...register("prakritiImpact.kaphaReason")}
+            error={errors.prakritiImpact?.kaphaReason?.message}
+          />
         </div>
       </div>
 
