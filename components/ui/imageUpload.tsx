@@ -23,12 +23,38 @@ export default function ImageUpload<T extends FieldValues>({
       name={name}
       render={({ field: { onChange, onBlur, value, ref } }) => (
         <div
-          className="relative border border-dashed border-[#9DB29D] rounded-2xl flex items-center justify-center bg-[#EAF2EA]"
+          className="relative border border-dashed overflow-hidden border-[#9DB29D] rounded-2xl flex items-center justify-center bg-[#EAF2EA]"
           style={{
             height,
             width,
           }}
         >
+          {value ? (
+            <>
+              <Image
+                src={value}
+                alt="Upload preview"
+                fill
+                className="object-cover rounded-lg"
+              />
+              <button
+                onClick={() => onChange("")}
+                className="absolute top-2 right-2 bg-[#b0c1b1] text-[#3A643C] rounded-full w-5 h-5 flex items-center justify-center z-2 cursor-pointer"
+              >
+                <X className="w-3 h-3" />
+              </button>
+            </>
+          ) : (
+            <div className="flex flex-col items-center justify-center gap-2">
+              <Image
+                src={"/images/image-upload-icon.svg"}
+                alt="img-upload"
+                width={24}
+                height={24}
+              />
+              <span className="text-xs font-medium">Upload Image</span>
+            </div>
+          )}
           <input
             ref={ref}
             type="file"
@@ -46,33 +72,6 @@ export default function ImageUpload<T extends FieldValues>({
             onBlur={onBlur}
             className="opacity-0 absolute h-full w-full cursor-pointer"
           />
-
-          {value ? (
-            <>
-              <Image
-                src={value}
-                alt="Upload preview"
-                fill
-                className="object-cover rounded-lg"
-              />
-              <button
-                onClick={() => onChange("")}
-                className="absolute top-2 right-2 bg-[#b0c1b1] text-[#3A643C] rounded-full w-5 h-5 flex items-center justify-center"
-              >
-                <X className="w-3 h-3" />
-              </button>
-            </>
-          ) : (
-            <div className="flex flex-col items-center justify-center gap-2">
-              <Image
-                src={"/images/image-upload-icon.svg"}
-                alt="img-upload"
-                width={24}
-                height={24}
-              />
-              <span className="text-xs font-medium">Upload Image</span>
-            </div>
-          )}
         </div>
       )}
     />
