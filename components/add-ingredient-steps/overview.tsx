@@ -5,6 +5,9 @@ import { OthersFormData } from "./others";
 import Image from "next/image";
 import { RefObject, useImperativeHandle } from "react";
 import { useIngredientStoreSelector } from "@/store/ingredientStore";
+import { OverviewSection } from "./overviewSection";
+import { OverviewList } from "./overviewList";
+import { OverviewItemWithIcon } from "./overviewItemWithIcon";
 
 export type OverviewFormData = GeneralInfoFormData &
   BenefitsFormData &
@@ -52,19 +55,12 @@ export default function Overview({ onSubmit, ref }: OverviewProps) {
       </section>
 
       {/* Why To Use */}
-      <section className="flex flex-col gap-4">
-        <h2 className="text-2xl font-semibold">Why {data?.ingredientName} ?</h2>
-        <ul className="list-disc list-inside ml-3 text-xl font-medium space-y-4">
-          {data?.whyToUse?.map((item, index) => (
-            <li key={index}>{item.description}</li>
-          ))}
-        </ul>
-      </section>
-      <div className="border-t border-light-gray"></div>
+      <OverviewSection title={`Why ${data?.ingredientName} ?`} withDivider>
+        <OverviewList items={data?.whyToUse} />
+      </OverviewSection>
 
       {/* Prakriti Impact */}
-      <section>
-        <h2 className="text-2xl font-semibold mb-4">Prakriti Impact</h2>
+      <OverviewSection title="Prakriti Impact" withDivider>
         <ul className="list-disc list-inside ml-3 text-xl font-medium space-y-4">
           <li>
             Vata - {data?.prakritiImpact?.vata}-
@@ -79,76 +75,35 @@ export default function Overview({ onSubmit, ref }: OverviewProps) {
             {data?.prakritiImpact?.pittaReason}
           </li>
         </ul>
-      </section>
-      <div className="border-t border-light-gray"></div>
+      </OverviewSection>
 
       {/* Benefits */}
-      <section>
-        <h2 className="text-2xl font-semibold mb-4">Benefits</h2>
-
-        {data?.benefits?.map((benefit, index) => (
-          <div key={index} className="flex">
-            {benefit.image && (
-              <Image
-                src={benefit.image}
-                alt=""
-                width={35}
-                height={35}
-                className="w-[35px] h-[35px] object-contain"
-              />
-            )}
-            <p className="text-xl font-medium">{benefit?.description}</p>
-          </div>
-        ))}
-      </section>
-      <div className="border-t border-light-gray"></div>
+      <OverviewSection title="Benefits" withDivider>
+        <OverviewItemWithIcon items={data?.benefits} />
+      </OverviewSection>
 
       {/* Ayurvedic Properties */}
-      <section>
-        <h2 className="text-2xl font-semibold mb-4">Ayurvedic Properties</h2>
+      <OverviewSection title="Ayurvedic Properties" withDivider>
         <ul className="list-disc list-inside ml-3 text-xl font-medium space-y-4">
           <li>Rasa - {data?.ayurvedicProperties?.rasa}</li>
           <li>Veerya - {data?.ayurvedicProperties?.veerya}</li>
           <li>Guna - {data?.ayurvedicProperties?.guna}</li>
           <li>Vipaka - {data?.ayurvedicProperties?.vipaka}</li>
         </ul>
-      </section>
-      <div className="border-t border-light-gray"></div>
+      </OverviewSection>
 
       {/* Important Formulations */}
-      <section>
-        <h2 className="text-2xl font-semibold mb-4">Important Formulations</h2>
-        {data?.importantFormulations?.map((formulations, index) => (
-          <div key={index} className="flex">
-            {formulations?.image && (
-              <Image
-                src={formulations?.image}
-                alt=""
-                width={35}
-                height={35}
-                className="w-[35px] h-[35px] object-contain"
-              />
-            )}
-            <p className="text-xl font-medium">{formulations?.description}</p>
-          </div>
-        ))}
-      </section>
+      <OverviewSection title="Important Formulations">
+        <OverviewItemWithIcon items={data?.importantFormulations} />
+      </OverviewSection>
 
       {/* Therapeutic Uses */}
-      <section>
-        <h2 className="text-2xl font-semibold mb-4">Therapeutic Uses</h2>
-        <ul className="list-disc list-inside ml-3 text-xl font-medium space-y-4">
-          {data?.therapeuticUses?.map((item, index) => (
-            <li key={index}>{item.description}</li>
-          ))}
-        </ul>
-      </section>
+      <OverviewSection title="Therapeutic Uses">
+        <OverviewList items={data?.therapeuticUses} />
+      </OverviewSection>
 
       {/* Plant Parts and Its Purpose */}
-      <section>
-        <h2 className="text-2xl font-semibold mb-4">
-          Plant Parts and Its Purpose
-        </h2>
+      <OverviewSection title="Plant Parts and Its Purpose">
         <ul className="list-disc list-inside ml-3 text-xl font-medium space-y-4">
           {data?.plantParts?.map((item, index) => (
             <li key={index}>
@@ -156,19 +111,17 @@ export default function Overview({ onSubmit, ref }: OverviewProps) {
             </li>
           ))}
         </ul>
-      </section>
+      </OverviewSection>
 
       {/* Best Combined With */}
-      <section>
-        <h2 className="text-2xl font-semibold mb-4">Best Combined With</h2>
+      <OverviewSection title="Best Combined With">
         <p className="text-xl font-medium">{data?.bestCombinedWith}</p>
-      </section>
+      </OverviewSection>
 
       {/* Geographical Locations */}
-      <section>
-        <h2 className="text-2xl font-semibold mb-4">Geographical Locations</h2>
+      <OverviewSection title="Geographical Locations">
         <p className="text-xl font-medium">{data?.geographicalLocations}</p>
-      </section>
+      </OverviewSection>
     </div>
   );
 }
