@@ -5,6 +5,7 @@ import Others from "@/components/add-ingredient-steps/others";
 import Properties from "@/components/add-ingredient-steps/properties";
 import Breadcrumb from "@/components/ui/breadcrumb";
 import Button from "@/components/ui/button";
+import Stepper from "@/components/ui/stepper";
 import { useRef, useState } from "react";
 
 export default function IngredientsAdd() {
@@ -51,6 +52,7 @@ export default function IngredientsAdd() {
           { label: "Add Ingredient" },
         ]}
       />
+      <Stepper currentStep={step + 1} />
       {steps[step]}
       <div className="flex justify-center gap-4 mt-5">
         <Button onClick={handleSave}>Save</Button>
