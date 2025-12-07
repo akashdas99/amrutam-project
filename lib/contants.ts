@@ -1,4 +1,4 @@
-export const errorMessages = {
+export const ERROR_MESSAGE = {
   // General Info Form
   INGREDIENT_NAME_REQUIRED: "Ingredient name is required",
   SCIENTIFIC_NAME_REQUIRED: "Scientific name is required",
@@ -6,4 +6,13 @@ export const errorMessages = {
   DESCRIPTION_REQUIRED: "Description is required",
   DESCRIPTION_MIN_LENGTH: "Description must be at least 10 characters",
   IMAGE_REQUIRED: "Image is required",
+
+  // Prakriti Impact
+  PRAKRITI_IMPACT_REQUIRED: "Prakriti impact is required",
 };
+export const IMPACT_OPTIONS = [
+  "Balanced",
+  "Mildly Increasing",
+  "Unbalanced",
+  "Agravate",
+];

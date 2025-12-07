@@ -1,28 +1,34 @@
 "use client";
 import ImageUpload from "@/components/ui/imageUpload";
 import Input from "@/components/ui/input";
-import { errorMessages } from "@/lib/contants";
+import { ERROR_MESSAGE, IMPACT_OPTIONS } from "@/lib/contants";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Plus, X } from "lucide-react";
+import { X } from "lucide-react";
 import Image from "next/image";
 import { RefObject, useImperativeHandle } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
+import Select from "../ui/select";
 
 const benefitsSchema = z.object({
-  whyToUse: z
-    .array(
-      z.object({
-        description: z.string().min(10, errorMessages.DESCRIPTION_MIN_LENGTH),
-      })
-    )
-    .min(1, "At least one reason is required"),
-  prakritiImpact: z.string().min(10, errorMessages.DESCRIPTION_MIN_LENGTH),
+  whyToUse: z.array(
+    z.object({
+      description: z.string(),
+    })
+  ),
+  prakritiImpact: z.object({
+    vata: z.string().min(1, ERROR_MESSAGE.PRAKRITI_IMPACT_REQUIRED),
+    vataReason: z.string(),
+    kapha: z.string().min(1, ERROR_MESSAGE.PRAKRITI_IMPACT_REQUIRED),
+    kaphaReason: z.string(),
+    pitta: z.string().min(1, ERROR_MESSAGE.PRAKRITI_IMPACT_REQUIRED),
+    pittaReason: z.string(),
+  }),
   benefits: z
     .array(
       z.object({
-        image: z.string().min(1, errorMessages.IMAGE_REQUIRED),
-        description: z.string().min(10, errorMessages.DESCRIPTION_MIN_LENGTH),
+        image: z.string(),
+        description: z.string(),
       })
     )
     .min(1, "At least one benefit is required"),
@@ -50,7 +56,14 @@ export default function Benefits({
     resolver: zodResolver(benefitsSchema),
     defaultValues: initialData || {
       whyToUse: [{ description: "" }],
-      prakritiImpact: "",
+      prakritiImpact: {
+        vata: "",
+        vataReason: "",
+        pitta: "",
+        pittaReason: "",
+        kapha: "",
+        kaphaReason: "",
+      },
       benefits: [{ image: "", description: "" }],
     },
   });
@@ -86,7 +99,6 @@ export default function Benefits({
         {whyToUseFields.map((field, index) => (
           <div key={field.id} className="flex gap-5">
             <Input
-              required
               {...register(`whyToUse.${index}.description`)}
               error={errors.whyToUse?.[index]?.description?.message}
             />
@@ -109,12 +121,76 @@ export default function Benefits({
           Add Another items
         </button>
       </div>
-      {/* <Input
-        label="Prakriti Impact"
-        required
-        {...register("prakritiImpact")}
-        error={errors.prakritiImpact?.message}
-      /> */}
+      <h2 className="text-[18px] font-semibold">Prakriti Impact</h2>
+
+      <div className="flex flex-col gap-4">
+        <div className="flex gap-4 items-center">
+          <div className="w-[280px]">
+            <Select
+              name="prakritiImpact.vata"
+              control={control}
+              options={IMPACT_OPTIONS.map((option) => ({
+                value: option,
+                label: option,
+              }))}
+              label="Vata"
+              required
+              error={errors.prakritiImpact?.vata?.message}
+            />
+          </div>
+          <div className="w-[280px]">
+            <Select
+              name="prakritiImpact.pitta"
+              control={control}
+              options={IMPACT_OPTIONS.map((option) => ({
+                value: option,
+                label: option,
+              }))}
+              label="Pitta"
+              required
+              error={errors.prakritiImpact?.pitta?.message}
+            />
+          </div>
+          <div className="w-[280px]">
+            <Select
+              name="prakritiImpact.kapha"
+              control={control}
+              options={IMPACT_OPTIONS.map((option) => ({
+                value: option,
+                label: option,
+              }))}
+              label="Kapha"
+              required
+              error={errors.prakritiImpact?.kapha?.message}
+            />
+          </div>
+        </div>
+
+        <div className="flex gap-4 items-start">
+          <div className="w-[280px]">
+            <Input
+              label="Vata Reason"
+              {...register("prakritiImpact.vataReason")}
+              error={errors.prakritiImpact?.vataReason?.message}
+            />
+          </div>
+          <div className="w-[280px]">
+            <Input
+              label="Pitta Reason"
+              {...register("prakritiImpact.pittaReason")}
+              error={errors.prakritiImpact?.pittaReason?.message}
+            />
+          </div>
+          <div className="w-[280px]">
+            <Input
+              label="Kapha Reason"
+              {...register("prakritiImpact.kaphaReason")}
+              error={errors.prakritiImpact?.kaphaReason?.message}
+            />
+          </div>
+        </div>
+      </div>
+
       <h2 className="text-[18px] font-semibold">Benefits</h2>
 
       <div className="flex flex-col gap-3">

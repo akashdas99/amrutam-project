@@ -17,7 +17,7 @@ export default function Input({
 }: InputProps) {
   const inputId = id || label?.toLowerCase().replace(/\s+/g, "-");
   return (
-    <div className="flex flex-col gap-1 grow">
+    <div className="flex flex-col gap-1 flex-1">
       <div className="relative">
         {label && (
           <label

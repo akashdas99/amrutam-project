@@ -1,18 +1,18 @@
 "use client";
 import ImageUpload from "@/components/ui/imageUpload";
 import Input from "@/components/ui/input";
-import { errorMessages } from "@/lib/contants";
+import { ERROR_MESSAGE } from "@/lib/contants";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RefObject, useImperativeHandle } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const generalInfoSchema = z.object({
-  ingredientName: z.string().min(1, errorMessages.INGREDIENT_NAME_REQUIRED),
-  scientificName: z.string().min(1, errorMessages.SCIENTIFIC_NAME_REQUIRED),
-  sanskritName: z.string().min(1, errorMessages.SANSKRIT_NAME_REQUIRED),
-  description: z.string().min(10, errorMessages.DESCRIPTION_MIN_LENGTH),
-  image: z.string().min(1, errorMessages.IMAGE_REQUIRED),
+  ingredientName: z.string().min(1, ERROR_MESSAGE.INGREDIENT_NAME_REQUIRED),
+  scientificName: z.string().min(1, ERROR_MESSAGE.SCIENTIFIC_NAME_REQUIRED),
+  sanskritName: z.string().min(1, ERROR_MESSAGE.SANSKRIT_NAME_REQUIRED),
+  description: z.string().min(10, ERROR_MESSAGE.DESCRIPTION_MIN_LENGTH),
+  image: z.string().min(1, ERROR_MESSAGE.IMAGE_REQUIRED),
 });
 
 export type GeneralInfoFormData = z.infer<typeof generalInfoSchema>;
