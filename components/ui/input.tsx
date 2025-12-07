@@ -34,6 +34,7 @@ export default function Input({
             `w-full px-4 py-3 border-2 border-light-gray rounded-md focus:outline-none text-xs `,
             className
           )}
+          placeholder="Type here..."
           {...props}
         />
       </div>

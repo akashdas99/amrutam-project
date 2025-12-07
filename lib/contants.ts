@@ -9,10 +9,29 @@ export const ERROR_MESSAGE = {
 
   // Prakriti Impact
   PRAKRITI_IMPACT_REQUIRED: "Prakriti impact is required",
+  //Properties
+  RASA_REQUIRED: "Rase cannot be empty",
+  VEERYA_REQUIRED: "Veerya cannot be empty",
+  GUNA_REQUIRED: "Guna cannot be empty",
+  VIPAKA_REQUIRED: "Vipaka cannot be empty",
+  // Others
+  PLANT_PART_REQUIRED: "Plant part is required",
+  BEST_COMBINED_WITH_REQUIRED: "Best combined with is required",
+  GEOGRAPHICAL_LOCATIONS_REQUIRED: "Geographical locations is required",
 };
 export const IMPACT_OPTIONS = [
   "Balanced",
   "Mildly Increasing",
   "Unbalanced",
   "Agravate",
+];
+
+export const PLANT_PARTS_OPTIONS = [
+  "Leaf",
+  "Root",
+  "Root Bark",
+  "Bark",
+  "Fruits",
+  "Juice/Extract",
+  "Pulp",
 ];
