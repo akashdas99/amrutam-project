@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Header() {
   return (
-    <header className="bg-foreground w-full flex fixed top-0">
+    <header className="bg-foreground w-full flex fixed top-0 z-2">
       <Image src="/images/logo.svg" alt="Amrutam" width={67} height={67} />
       <div className="flex items-center justify-between grow">
         <Image
