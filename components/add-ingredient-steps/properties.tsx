@@ -2,6 +2,7 @@
 import ImageUpload from "@/components/ui/imageUpload";
 import Input from "@/components/ui/input";
 import { ERROR_MESSAGE } from "@/lib/contants";
+import { useIngredientStoreSelector } from "@/store/ingredientStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { X } from "lucide-react";
 import Image from "next/image";
@@ -34,14 +35,15 @@ export type PropertiesFormData = z.infer<typeof propertiesSchema>;
 interface PropertiesProps {
   onSubmit: (data: PropertiesFormData) => void;
   ref: RefObject<{ submitForm: () => void } | null>;
-  initialData?: Partial<PropertiesFormData>;
 }
 
-export default function Properties({
-  onSubmit,
-  ref,
-  initialData,
-}: PropertiesProps) {
+export default function Properties({ onSubmit, ref }: PropertiesProps) {
+  const { ingredient } = useIngredientStoreSelector("ingredient");
+  const initialData = {
+    therapeuticUses: ingredient?.therapeuticUses,
+    ayurvedicProperties: ingredient?.ayurvedicProperties,
+    importantFormulations: ingredient?.importantFormulations,
+  };
   const {
     register,
     handleSubmit,

@@ -3,6 +3,7 @@ import Button from "@/components/ui/button";
 import Input from "@/components/ui/input";
 import Select from "@/components/ui/select";
 import { ERROR_MESSAGE, PLANT_PARTS_OPTIONS } from "@/lib/contants";
+import { useIngredientStoreSelector } from "@/store/ingredientStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus, X } from "lucide-react";
 import { RefObject, useImperativeHandle } from "react";
@@ -33,10 +34,15 @@ export type OthersFormData = z.infer<typeof othersSchema>;
 interface OthersProps {
   onSubmit: (data: OthersFormData) => void;
   ref: RefObject<{ submitForm: () => void } | null>;
-  initialData?: Partial<OthersFormData>;
 }
 
-export default function Others({ onSubmit, ref, initialData }: OthersProps) {
+export default function Others({ onSubmit, ref }: OthersProps) {
+  const { ingredient } = useIngredientStoreSelector("ingredient");
+  const initialData = {
+    plantParts: ingredient?.plantParts,
+    bestCombinedWith: ingredient?.bestCombinedWith,
+    geographicalLocations: ingredient?.geographicalLocations,
+  };
   const {
     register: plantPartRegister,
     handleSubmit: plantPartHandleSubmit,

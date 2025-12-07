@@ -10,25 +10,35 @@ import Breadcrumb from "@/components/ui/breadcrumb";
 import Button from "@/components/ui/button";
 import Stepper from "@/components/ui/stepper";
 import { useIngredientStoreSelector } from "@/store/ingredientStore";
-import { useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 
 export default function IngredientsAdd() {
   const ref = useRef<{ submitForm: () => void }>(null);
   const [step, setStep] = useState(4);
 
   const { updateIngredient } = useIngredientStoreSelector("updateIngredient");
-  const onSubmit = (data: Partial<OverviewFormData>) => {
-    console.log("Ingredient data:", data);
-    updateIngredient(data);
-    setStep((prev) => prev + 1);
-  };
-  const steps = [
-    <GeneralInfo ref={ref} onSubmit={onSubmit} />,
-    <Benefits ref={ref} onSubmit={onSubmit} />,
-    <Properties ref={ref} onSubmit={onSubmit} />,
-    <Others ref={ref} onSubmit={onSubmit} />,
-    <Overview ref={ref} onSubmit={() => console.log("submitted")} />,
-  ];
+  const onSubmit = useCallback(
+    (data: Partial<OverviewFormData>) => {
+      updateIngredient(data);
+      setStep((prev) => prev + 1);
+    },
+    [updateIngredient, setStep]
+  );
+  const steps = useMemo(
+    () => [
+      <GeneralInfo ref={ref} onSubmit={onSubmit} />,
+      <Benefits ref={ref} onSubmit={onSubmit} />,
+      <Properties ref={ref} onSubmit={onSubmit} />,
+      <Others ref={ref} onSubmit={onSubmit} />,
+      <Overview
+        ref={ref}
+        onSubmit={() => console.log("submitted")}
+        stepBack={(i) => setStep(i)}
+      />,
+    ],
+    [onSubmit, setStep]
+  );
+  console.count("parent");
   return (
     <div>
       <Breadcrumb

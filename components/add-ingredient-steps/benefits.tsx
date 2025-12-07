@@ -9,6 +9,7 @@ import { RefObject, useImperativeHandle } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 import Select from "../ui/select";
+import { useIngredientStoreSelector } from "@/store/ingredientStore";
 
 const benefitsSchema = z.object({
   whyToUse: z.array(
@@ -24,14 +25,12 @@ const benefitsSchema = z.object({
     pitta: z.string().min(1, ERROR_MESSAGE.PRAKRITI_IMPACT_REQUIRED),
     pittaReason: z.string(),
   }),
-  benefits: z
-    .array(
-      z.object({
-        image: z.string(),
-        description: z.string(),
-      })
-    )
-    .min(1, "At least one benefit is required"),
+  benefits: z.array(
+    z.object({
+      image: z.string(),
+      description: z.string(),
+    })
+  ),
 });
 
 export type BenefitsFormData = z.infer<typeof benefitsSchema>;
@@ -39,14 +38,15 @@ export type BenefitsFormData = z.infer<typeof benefitsSchema>;
 interface BenefitsProps {
   onSubmit: (data: BenefitsFormData) => void;
   ref: RefObject<{ submitForm: () => void } | null>;
-  initialData?: Partial<BenefitsFormData>;
 }
 
-export default function Benefits({
-  onSubmit,
-  ref,
-  initialData,
-}: BenefitsProps) {
+export default function Benefits({ onSubmit, ref }: BenefitsProps) {
+  const { ingredient } = useIngredientStoreSelector("ingredient");
+  const initialData = {
+    whyToUse: ingredient?.whyToUse,
+    prakritiImpact: ingredient?.prakritiImpact,
+    benefitsbenefits: ingredient?.benefits,
+  };
   const {
     register,
     handleSubmit,
@@ -80,7 +80,7 @@ export default function Benefits({
     control,
     name: "benefits",
   });
-
+  console.log(errors);
   useImperativeHandle(
     ref,
     () => ({

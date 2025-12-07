@@ -2,6 +2,7 @@
 import ImageUpload from "@/components/ui/imageUpload";
 import Input from "@/components/ui/input";
 import { ERROR_MESSAGE } from "@/lib/contants";
+import { useIngredientStoreSelector } from "@/store/ingredientStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RefObject, useImperativeHandle } from "react";
 import { useForm } from "react-hook-form";
@@ -23,11 +24,15 @@ interface GeneralInfoProps {
   initialData?: Partial<GeneralInfoFormData>;
 }
 
-export default function GeneralInfo({
-  onSubmit,
-  ref,
-  initialData,
-}: GeneralInfoProps) {
+export default function GeneralInfo({ onSubmit, ref }: GeneralInfoProps) {
+  const { ingredient } = useIngredientStoreSelector("ingredient");
+  const initialData = {
+    ingredientName: ingredient?.ingredientName,
+    scientificName: ingredient?.scientificName,
+    sanskritName: ingredient?.sanskritName,
+    description: ingredient?.description,
+    image: ingredient?.image,
+  };
   const {
     register,
     handleSubmit,
