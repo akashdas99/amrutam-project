@@ -1,6 +1,6 @@
 import React from "react";
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface InputProps extends React.ComponentProps<"input"> {
   label?: string;
   error?: string;
   required?: boolean;
@@ -15,7 +15,6 @@ export default function Input({
   ...props
 }: InputProps) {
   const inputId = id || label?.toLowerCase().replace(/\s+/g, "-");
-
   return (
     <div className="flex flex-col gap-1 grow">
       <div className="relative">

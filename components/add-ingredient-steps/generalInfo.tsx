@@ -1,17 +1,89 @@
-import ImageUpload from "../ui/imageUpload";
-import Input from "../ui/input";
+"use client";
+import ImageUpload from "@/components/ui/imageUpload";
+import Input from "@/components/ui/input";
+import { errorMessages } from "@/lib/contants";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { RefObject, useImperativeHandle } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
-export default function GeneralInfo() {
+const generalInfoSchema = z.object({
+  ingredientName: z.string().min(1, errorMessages.INGREDIENT_NAME_REQUIRED),
+  scientificName: z.string().min(1, errorMessages.SCIENTIFIC_NAME_REQUIRED),
+  sanskritName: z.string().min(1, errorMessages.SANSKRIT_NAME_REQUIRED),
+  description: z.string().min(10, errorMessages.DESCRIPTION_MIN_LENGTH),
+  image: z.string().min(1, errorMessages.IMAGE_REQUIRED),
+});
+
+export type GeneralInfoFormData = z.infer<typeof generalInfoSchema>;
+
+interface GeneralInfoProps {
+  onSubmit: (data: GeneralInfoFormData) => void;
+  ref: RefObject<{ submitForm: () => void } | null>;
+  initialData?: Partial<GeneralInfoFormData>;
+}
+
+export default function GeneralInfo({
+  onSubmit,
+  ref,
+  initialData,
+}: GeneralInfoProps) {
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<GeneralInfoFormData>({
+    resolver: zodResolver(generalInfoSchema),
+    defaultValues: initialData || {
+      ingredientName: "",
+      scientificName: "",
+      sanskritName: "",
+      description: "",
+      image: "",
+    },
+  });
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      submitForm: () => {
+        handleSubmit(onSubmit)();
+      },
+    }),
+    []
+  );
+
   return (
-    <section className="bg-foreground p-6 rounded-2xl flex flex-col gap-6">
+    <form className="bg-foreground p-6 rounded-2xl flex flex-col gap-6">
       <h1 className="text-[18px] font-semibold">General Information</h1>
       <div className="flex gap-5">
-        <Input label="Ingredient Name" required />
-        <Input label="Scientific Name" required />
-        <Input label="Sanskrit Name" required />
+        <Input
+          label="Ingredient Name"
+          required
+          {...register("ingredientName")}
+          error={errors.ingredientName?.message}
+        />
+        <Input
+          label="Scientific Name"
+          required
+          {...register("scientificName")}
+          error={errors.scientificName?.message}
+        />
+        <Input
+          label="Sanskrit Name"
+          required
+          {...register("sanskritName")}
+          error={errors.sanskritName?.message}
+        />
       </div>
-      <Input label="Description" required />
-      <ImageUpload width={220} height={220} />
-    </section>
+      <Input
+        label="Description"
+        required
+        {...register("description")}
+        error={errors.description?.message}
+      />
+      <ImageUpload width={220} height={220} name="image" control={control} />
+    </form>
   );
 }
