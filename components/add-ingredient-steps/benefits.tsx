@@ -10,6 +10,7 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 import Select from "../ui/select";
 import { useIngredientStoreSelector } from "@/store/ingredientStore";
+import { useStepStoreSelector } from "@/store/stepStore";
 
 const benefitsSchema = z.object({
   whyToUse: z.array(
@@ -36,17 +37,22 @@ const benefitsSchema = z.object({
 export type BenefitsFormData = z.infer<typeof benefitsSchema>;
 
 interface BenefitsProps {
-  onSubmit: (data: BenefitsFormData) => void;
   ref: RefObject<{ submitForm: () => void } | null>;
 }
 
-export default function Benefits({ onSubmit, ref }: BenefitsProps) {
-  const { ingredient } = useIngredientStoreSelector("ingredient");
+export default function Benefits({ ref }: BenefitsProps) {
+  const { ingredient, updateIngredient } = useIngredientStoreSelector(
+    "ingredient",
+    "updateIngredient"
+  );
+  const { nextStep } = useStepStoreSelector("nextStep");
+
   const initialData = {
     whyToUse: ingredient?.whyToUse,
     prakritiImpact: ingredient?.prakritiImpact,
-    benefitsbenefits: ingredient?.benefits,
+    benefits: ingredient?.benefits,
   };
+
   const {
     register,
     handleSubmit,
@@ -80,13 +86,14 @@ export default function Benefits({ onSubmit, ref }: BenefitsProps) {
     control,
     name: "benefits",
   });
-  console.log(errors);
+
   useImperativeHandle(
     ref,
     () => ({
-      submitForm: () => {
-        handleSubmit(onSubmit)();
-      },
+      submitForm: handleSubmit((data) => {
+        updateIngredient(data);
+        nextStep();
+      }),
     }),
     []
   );

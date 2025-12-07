@@ -3,6 +3,7 @@ import ImageUpload from "@/components/ui/imageUpload";
 import Input from "@/components/ui/input";
 import { ERROR_MESSAGE } from "@/lib/contants";
 import { useIngredientStoreSelector } from "@/store/ingredientStore";
+import { useStepStoreSelector } from "@/store/stepStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RefObject, useImperativeHandle } from "react";
 import { useForm } from "react-hook-form";
@@ -19,13 +20,16 @@ const generalInfoSchema = z.object({
 export type GeneralInfoFormData = z.infer<typeof generalInfoSchema>;
 
 interface GeneralInfoProps {
-  onSubmit: (data: GeneralInfoFormData) => void;
   ref: RefObject<{ submitForm: () => void } | null>;
-  initialData?: Partial<GeneralInfoFormData>;
 }
 
-export default function GeneralInfo({ onSubmit, ref }: GeneralInfoProps) {
-  const { ingredient } = useIngredientStoreSelector("ingredient");
+export default function GeneralInfo({ ref }: GeneralInfoProps) {
+  const { ingredient, updateIngredient } = useIngredientStoreSelector(
+    "ingredient",
+    "updateIngredient"
+  );
+  const { nextStep } = useStepStoreSelector("nextStep");
+
   const initialData = {
     ingredientName: ingredient?.ingredientName,
     scientificName: ingredient?.scientificName,
@@ -33,6 +37,7 @@ export default function GeneralInfo({ onSubmit, ref }: GeneralInfoProps) {
     description: ingredient?.description,
     image: ingredient?.image,
   };
+
   const {
     register,
     handleSubmit,
@@ -52,9 +57,11 @@ export default function GeneralInfo({ onSubmit, ref }: GeneralInfoProps) {
   useImperativeHandle(
     ref,
     () => ({
-      submitForm: () => {
-        handleSubmit(onSubmit)();
-      },
+      submitForm: handleSubmit((data) => {
+        updateIngredient(data);
+        nextStep();
+        console.log(data);
+      }),
     }),
     []
   );

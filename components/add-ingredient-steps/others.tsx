@@ -4,6 +4,7 @@ import Input from "@/components/ui/input";
 import Select from "@/components/ui/select";
 import { ERROR_MESSAGE, PLANT_PARTS_OPTIONS } from "@/lib/contants";
 import { useIngredientStoreSelector } from "@/store/ingredientStore";
+import { useStepStoreSelector } from "@/store/stepStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus, X } from "lucide-react";
 import { RefObject, useImperativeHandle } from "react";
@@ -32,17 +33,22 @@ const othersSchema = z.object({
 export type OthersFormData = z.infer<typeof othersSchema>;
 
 interface OthersProps {
-  onSubmit: (data: OthersFormData) => void;
   ref: RefObject<{ submitForm: () => void } | null>;
 }
 
-export default function Others({ onSubmit, ref }: OthersProps) {
-  const { ingredient } = useIngredientStoreSelector("ingredient");
+export default function Others({ ref }: OthersProps) {
+  const { ingredient, updateIngredient } = useIngredientStoreSelector(
+    "ingredient",
+    "updateIngredient"
+  );
+  const { nextStep } = useStepStoreSelector("nextStep");
+
   const initialData = {
     plantParts: ingredient?.plantParts,
     bestCombinedWith: ingredient?.bestCombinedWith,
     geographicalLocations: ingredient?.geographicalLocations,
   };
+
   const {
     register: plantPartRegister,
     handleSubmit: plantPartHandleSubmit,
@@ -56,6 +62,7 @@ export default function Others({ onSubmit, ref }: OthersProps) {
       description: "",
     },
   });
+
   const {
     register,
     handleSubmit,
@@ -79,9 +86,10 @@ export default function Others({ onSubmit, ref }: OthersProps) {
   useImperativeHandle(
     ref,
     () => ({
-      submitForm: () => {
-        handleSubmit(onSubmit)();
-      },
+      submitForm: handleSubmit((data) => {
+        updateIngredient(data);
+        nextStep();
+      }),
     }),
     []
   );

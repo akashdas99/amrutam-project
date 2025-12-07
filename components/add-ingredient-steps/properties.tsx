@@ -3,6 +3,7 @@ import ImageUpload from "@/components/ui/imageUpload";
 import Input from "@/components/ui/input";
 import { ERROR_MESSAGE } from "@/lib/contants";
 import { useIngredientStoreSelector } from "@/store/ingredientStore";
+import { useStepStoreSelector } from "@/store/stepStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { X } from "lucide-react";
 import Image from "next/image";
@@ -33,17 +34,22 @@ const propertiesSchema = z.object({
 export type PropertiesFormData = z.infer<typeof propertiesSchema>;
 
 interface PropertiesProps {
-  onSubmit: (data: PropertiesFormData) => void;
   ref: RefObject<{ submitForm: () => void } | null>;
 }
 
-export default function Properties({ onSubmit, ref }: PropertiesProps) {
-  const { ingredient } = useIngredientStoreSelector("ingredient");
+export default function Properties({ ref }: PropertiesProps) {
+  const { ingredient, updateIngredient } = useIngredientStoreSelector(
+    "ingredient",
+    "updateIngredient"
+  );
+  const { nextStep } = useStepStoreSelector("nextStep");
+
   const initialData = {
     therapeuticUses: ingredient?.therapeuticUses,
     ayurvedicProperties: ingredient?.ayurvedicProperties,
     importantFormulations: ingredient?.importantFormulations,
   };
+
   const {
     register,
     handleSubmit,
@@ -79,9 +85,10 @@ export default function Properties({ onSubmit, ref }: PropertiesProps) {
   useImperativeHandle(
     ref,
     () => ({
-      submitForm: () => {
-        handleSubmit(onSubmit)();
-      },
+      submitForm: handleSubmit((data) => {
+        updateIngredient(data);
+        nextStep();
+      }),
     }),
     []
   );

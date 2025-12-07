@@ -1,9 +1,9 @@
 import { cn } from "@/lib/utils";
+import { useStepStoreSelector } from "@/store/stepStore";
 import { Check } from "lucide-react";
 import React from "react";
 
 interface StepperProps {
-  currentStep: number;
   totalSteps?: number;
   labels?: string[];
 }
@@ -17,10 +17,10 @@ const DEFAULT_LABELS = [
 ];
 
 export default function Stepper({
-  currentStep,
   totalSteps = 5,
   labels = DEFAULT_LABELS,
 }: StepperProps) {
+  const { step: currentStep } = useStepStoreSelector("step");
   return (
     <div className="flex items-center w-[70%] mx-auto mb-9.5">
       {Array.from({ length: totalSteps }, (_, index) => {
