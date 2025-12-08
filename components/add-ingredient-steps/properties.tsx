@@ -44,12 +44,6 @@ export default function Properties({ ref }: PropertiesProps) {
   );
   const { nextStep } = useStepStoreSelector("nextStep");
 
-  const initialData = {
-    therapeuticUses: ingredient?.therapeuticUses,
-    ayurvedicProperties: ingredient?.ayurvedicProperties,
-    importantFormulations: ingredient?.importantFormulations,
-  };
-
   const {
     register,
     handleSubmit,
@@ -57,15 +51,10 @@ export default function Properties({ ref }: PropertiesProps) {
     formState: { errors },
   } = useForm<PropertiesFormData>({
     resolver: zodResolver(propertiesSchema),
-    defaultValues: initialData || {
-      therapeuticUses: [{ description: "" }],
-      ayurvedicProperties: {
-        rasa: "",
-        veerya: "",
-        guna: "",
-        vipaka: "",
-      },
-      importantFormulations: [{ image: "", description: "" }],
+    defaultValues: {
+      therapeuticUses: ingredient?.therapeuticUses,
+      ayurvedicProperties: ingredient?.ayurvedicProperties,
+      importantFormulations: ingredient?.importantFormulations,
     },
   });
 

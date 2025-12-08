@@ -47,12 +47,6 @@ export default function Benefits({ ref }: BenefitsProps) {
   );
   const { nextStep } = useStepStoreSelector("nextStep");
 
-  const initialData = {
-    whyToUse: ingredient?.whyToUse,
-    prakritiImpact: ingredient?.prakritiImpact,
-    benefits: ingredient?.benefits,
-  };
-
   const {
     register,
     handleSubmit,
@@ -60,17 +54,10 @@ export default function Benefits({ ref }: BenefitsProps) {
     formState: { errors },
   } = useForm<BenefitsFormData>({
     resolver: zodResolver(benefitsSchema),
-    defaultValues: initialData || {
-      whyToUse: [{ description: "" }],
-      prakritiImpact: {
-        vata: "",
-        vataReason: "",
-        pitta: "",
-        pittaReason: "",
-        kapha: "",
-        kaphaReason: "",
-      },
-      benefits: [{ image: "", description: "" }],
+    defaultValues: {
+      whyToUse: ingredient?.whyToUse,
+      prakritiImpact: ingredient?.prakritiImpact,
+      benefits: ingredient?.benefits,
     },
   });
 

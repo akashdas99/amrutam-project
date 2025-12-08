@@ -10,7 +10,34 @@ interface IngredientState {
 }
 
 export const useIngredientStore = create<IngredientState>((set) => ({
-  ingredient: {},
+  ingredient: {
+    ingredientName: "",
+    scientificName: "",
+    sanskritName: "",
+    description: "",
+    image: "",
+    whyToUse: [{ description: "" }],
+    prakritiImpact: {
+      vata: "",
+      vataReason: "",
+      pitta: "",
+      pittaReason: "",
+      kapha: "",
+      kaphaReason: "",
+    },
+    benefits: [{ image: "", description: "" }],
+    plantParts: [],
+    bestCombinedWith: "",
+    geographicalLocations: "",
+    therapeuticUses: [{ description: "" }],
+    ayurvedicProperties: {
+      rasa: "",
+      veerya: "",
+      guna: "",
+      vipaka: "",
+    },
+    importantFormulations: [{ image: "", description: "" }],
+  },
   setIngredient: (ingredient) => set({ ingredient }),
   updateIngredient: (data) =>
     set((state) => ({

@@ -43,12 +43,6 @@ export default function Others({ ref }: OthersProps) {
   );
   const { nextStep } = useStepStoreSelector("nextStep");
 
-  const initialData = {
-    plantParts: ingredient?.plantParts,
-    bestCombinedWith: ingredient?.bestCombinedWith,
-    geographicalLocations: ingredient?.geographicalLocations,
-  };
-
   const {
     register: plantPartRegister,
     handleSubmit: plantPartHandleSubmit,
@@ -71,10 +65,10 @@ export default function Others({ ref }: OthersProps) {
     getValues,
   } = useForm<OthersFormData>({
     resolver: zodResolver(othersSchema),
-    defaultValues: initialData || {
-      plantParts: [],
-      bestCombinedWith: "",
-      geographicalLocations: "",
+    defaultValues: {
+      plantParts: ingredient?.plantParts,
+      bestCombinedWith: ingredient?.bestCombinedWith,
+      geographicalLocations: ingredient?.geographicalLocations,
     },
   });
 

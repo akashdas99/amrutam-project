@@ -30,13 +30,6 @@ export default function GeneralInfo({ ref }: GeneralInfoProps) {
   );
   const { nextStep } = useStepStoreSelector("nextStep");
 
-  const initialData = {
-    ingredientName: ingredient?.ingredientName,
-    scientificName: ingredient?.scientificName,
-    sanskritName: ingredient?.sanskritName,
-    description: ingredient?.description,
-    image: ingredient?.image,
-  };
   const {
     register,
     handleSubmit,
@@ -44,12 +37,12 @@ export default function GeneralInfo({ ref }: GeneralInfoProps) {
     formState: { errors },
   } = useForm<GeneralInfoFormData>({
     resolver: zodResolver(generalInfoSchema),
-    defaultValues: initialData || {
-      ingredientName: "",
-      scientificName: "",
-      sanskritName: "",
-      description: "",
-      image: "",
+    defaultValues: {
+      ingredientName: ingredient?.ingredientName,
+      scientificName: ingredient?.scientificName,
+      sanskritName: ingredient?.sanskritName,
+      description: ingredient?.description,
+      image: ingredient?.image,
     },
   });
 
