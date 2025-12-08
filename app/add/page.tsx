@@ -20,7 +20,6 @@ export default function IngredientsAdd() {
       <form
         onSubmit={(e) => {
           e?.preventDefault();
-          console.log("subt");
           ref?.current?.submitForm();
         }}
       >
