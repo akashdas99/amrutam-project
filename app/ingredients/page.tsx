@@ -11,27 +11,17 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
-
-// Mock data - replace with actual data
-const mockIngredients = Array.from({ length: 50 }, (_, i) => ({
-  id: i + 1,
-  name: `Ingredient ${i + 1}`,
-  image: "/images/bhasm.png",
-  description: `This is a description for ingredient ${
-    i + 1
-  }. It contains beneficial properties.`,
-  status: "Active",
-}));
+import { MOCK_INGREDIENTS } from "@/lib/contants";
 
 export default function IngredientsList() {
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  const totalPages = Math.ceil(mockIngredients.length / itemsPerPage);
+  const totalPages = Math.ceil(MOCK_INGREDIENTS.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentItems = mockIngredients.slice(startIndex, endIndex);
+  const currentItems = MOCK_INGREDIENTS.slice(startIndex, endIndex);
 
   const handleSelectItem = (id: number, checked: boolean) => {
     if (checked) {

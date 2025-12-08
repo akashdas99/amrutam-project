@@ -35,3 +35,33 @@ export const PLANT_PARTS_OPTIONS = [
   "Juice/Extract",
   "Pulp",
 ];
+
+export const INGREDIENT_IMAGES = [
+  "/images/khus.png",
+  "/images/chandan.png",
+  "/images/bhasm.png",
+  "/images/giloy.png",
+  "/images/bhringraj.png",
+];
+
+export const INGREDIENT_NAMES = [
+  "Khus Khus",
+  "Rakta Chandan",
+  "Swarn Bhashm",
+  "Giloy",
+  "Bhringraj",
+];
+
+export const MOCK_INGREDIENTS = Array.from({ length: 50 }, (_, i) => {
+  const ingredientIndex = i % INGREDIENT_NAMES.length;
+  const occurrenceNumber = Math.floor(i / INGREDIENT_NAMES.length);
+  const ingredientName = INGREDIENT_NAMES[ingredientIndex];
+
+  return {
+    id: i + 1,
+    name: `${ingredientName} ${occurrenceNumber > 0 ? occurrenceNumber : ""}`,
+    image: INGREDIENT_IMAGES[ingredientIndex],
+    description: `This is a description for ${ingredientName}. It contains beneficial properties.`,
+    status: "Active",
+  };
+});
