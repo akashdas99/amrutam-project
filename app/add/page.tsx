@@ -12,7 +12,7 @@ export default function IngredientsAdd() {
     <>
       <Breadcrumb
         items={[
-          { label: "Ingredient", href: "/ingredients" },
+          { label: "Ingredient", href: "/" },
           { label: "Add Ingredient" },
         ]}
       />

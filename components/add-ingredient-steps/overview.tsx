@@ -40,13 +40,13 @@ export default function Overview({ ref, showMenu = false }: OverviewProps) {
   };
   const onEdit = (i: number) => {
     setStep(i);
-    router.push("/ingredients/add");
+    router.push("/add");
   };
   useImperativeHandle(
     ref,
     () => ({
       submitForm: () => {
-        router.push("/ingredients/details");
+        router.push("/details");
       },
     }),
     []

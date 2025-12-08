@@ -39,7 +39,7 @@ export default function IngredientsList() {
 
   return (
     <>
-      <Breadcrumb items={[{ label: "Ingredient", href: "/ingredients" }]} />
+      <Breadcrumb items={[{ label: "Ingredient", href: "/" }]} />
       <div className="bg-foreground p-6 rounded-2xl flex flex-col gap-6">
         <section className="flex flex-col gap-6">
           <div className="flex items-center gap-4">

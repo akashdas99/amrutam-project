@@ -6,7 +6,7 @@ export default function IngredientDetails() {
     <div>
       <Breadcrumb
         items={[
-          { label: "Ingredient", href: "/ingredients" },
+          { label: "Ingredient", href: "/" },
           { label: "Ingredient Details" },
         ]}
       />

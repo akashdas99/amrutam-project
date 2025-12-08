@@ -52,18 +52,18 @@ const menuItems: MenuItem[] = [
     id: "ingredients",
     label: "Ingredients",
     icon: "/images/ingredients-icon.svg",
-    href: "/ingredients",
+    href: "/",
 
     subMenu: [
       {
         id: "ingredient-list",
         label: "Ingredient List",
-        href: "/ingredients",
+        href: "/",
       },
       {
         id: "add-ingredients",
         label: "Add Ingredients",
-        href: "/ingredients/add",
+        href: "/add",
       },
     ],
   },
@@ -126,7 +126,7 @@ export default function Sidebar() {
         {menuItems?.map((item) => (
           <div key={item.id}>
             <Link
-              href={"/ingredients"}
+              href={"/"}
               className={`px-4 py-3 flex gap-1.5 items-center cursor-pointer hover:bg-gray/10 rounded-md ${
                 isSubMenuActive(item)
                   ? " bg-background"
