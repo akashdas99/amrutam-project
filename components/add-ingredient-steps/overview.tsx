@@ -29,7 +29,9 @@ export default function Overview({ ref, showMenu = false }: OverviewProps) {
   const router = useRouter();
   const { setStep } = useStepStoreSelector("setStep");
 
-  const [isActive, setIsActive] = useState<number[]>([]);
+  const [isActive, setIsActive] = useState<number[]>([
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+  ]);
   const onToggleStatus = (i: number) => {
     setIsActive((prev) =>
       prev.includes(i) ? prev.filter((item) => item !== i) : [...prev, i]
@@ -56,16 +58,18 @@ export default function Overview({ ref, showMenu = false }: OverviewProps) {
         <div className="flex justify-between">
           <div className="flex items-center gap-2 mb-4">
             <h1 className="text-2xl font-semibold ">General Information</h1>
-            <Image
-              src={
-                isActive.includes(0)
-                  ? "/images/tick.png"
-                  : "/images/inactive.png"
-              }
-              alt="img"
-              width={24}
-              height={24}
-            />
+            {showMenu && (
+              <Image
+                src={
+                  isActive.includes(0)
+                    ? "/images/tick.png"
+                    : "/images/inactive.png"
+                }
+                alt="img"
+                width={24}
+                height={24}
+              />
+            )}
           </div>
           {showMenu ? (
             <IngredientDropdownMenu
@@ -86,12 +90,13 @@ export default function Overview({ ref, showMenu = false }: OverviewProps) {
             className="mx-auto mb-8"
           />
         )}
+        <h2 className="font-bold text-2xl">
+          {data?.ingredientName} - {data?.scientificName} (Sanskrit-
+          {data?.sanskritName})
+        </h2>
         <div className="flex justify-between">
           <div className="flex items-center gap-2">
-            <h2 className="font-bold text-2xl">
-              {data?.ingredientName} - {data?.scientificName} (Sanskrit-
-              {data?.sanskritName})
-            </h2>
+            <h3 className="text-2xl font-semibold">Description</h3>
             {showMenu && (
               <Image
                 src={
@@ -115,149 +120,174 @@ export default function Overview({ ref, showMenu = false }: OverviewProps) {
             <StepBackButton step={1} />
           )}
         </div>
-        <h3 className="text-2xl font-semibold">Description</h3>
+
         <p className="text-xl">{data?.description}</p>
       </section>
 
       {/* Why To Use */}
-      <OverviewSection
-        title={`Why ${data?.ingredientName} ?`}
-        withDivider
-        step={2}
-        showMenu={showMenu}
-        isActive={isActive.includes(2)}
-        onToggleStatus={() => onToggleStatus(2)}
-        onEdit={() => onEdit(2)}
-      >
-        <OverviewList items={data?.whyToUse} />
-      </OverviewSection>
+      {data?.whyToUse && data.whyToUse.length > 0 && (
+        <OverviewSection
+          title={`Why ${data?.ingredientName} ?`}
+          withDivider
+          step={2}
+          showMenu={showMenu}
+          isActive={isActive.includes(2)}
+          onToggleStatus={() => onToggleStatus(2)}
+          onEdit={() => onEdit(2)}
+        >
+          <OverviewList items={data?.whyToUse} />
+        </OverviewSection>
+      )}
 
       {/* Prakriti Impact */}
-      <OverviewSection
-        title="Prakriti Impact"
-        withDivider
-        step={2}
-        showMenu={showMenu}
-        isActive={isActive.includes(3)}
-        onToggleStatus={() => onToggleStatus(3)}
-        onEdit={() => onEdit(2)}
-      >
-        <ul className="list-disc list-inside ml-3 text-xl font-medium space-y-4">
-          <li>
-            Vata - {data?.prakritiImpact?.vata}-
-            {data?.prakritiImpact?.vataReason}
-          </li>
-          <li>
-            Kapha - {data?.prakritiImpact?.kapha}-
-            {data?.prakritiImpact?.kaphaReason}
-          </li>
-          <li>
-            Pitta - {data?.prakritiImpact?.pitta}-
-            {data?.prakritiImpact?.pittaReason}
-          </li>
-        </ul>
-      </OverviewSection>
+      {data?.prakritiImpact &&
+        (data.prakritiImpact.vata ||
+          data.prakritiImpact.kapha ||
+          data.prakritiImpact.pitta) && (
+          <OverviewSection
+            title="Prakriti Impact"
+            withDivider
+            step={2}
+            showMenu={showMenu}
+            isActive={isActive.includes(3)}
+            onToggleStatus={() => onToggleStatus(3)}
+            onEdit={() => onEdit(2)}
+          >
+            <ul className="list-disc list-inside ml-3 text-xl font-medium space-y-4">
+              <li>
+                Vata - {data?.prakritiImpact?.vata} -{" "}
+                {data?.prakritiImpact?.vataReason || "none"}
+              </li>
+              <li>
+                Kapha - {data?.prakritiImpact?.kapha} -{" "}
+                {data?.prakritiImpact?.kaphaReason || "none"}
+              </li>
+              <li>
+                Pitta - {data?.prakritiImpact?.pitta} -{" "}
+                {data?.prakritiImpact?.pittaReason || "none"}
+              </li>
+            </ul>
+          </OverviewSection>
+        )}
 
       {/* Benefits */}
-      <OverviewSection
-        title="Benefits"
-        withDivider
-        step={2}
-        showMenu={showMenu}
-        isActive={isActive.includes(4)}
-        onToggleStatus={() => onToggleStatus(4)}
-        onEdit={() => onEdit(2)}
-      >
-        <OverviewItemWithIcon items={data?.benefits} />
-      </OverviewSection>
+      {data?.benefits && data.benefits.length > 0 && (
+        <OverviewSection
+          title="Benefits"
+          withDivider
+          step={2}
+          showMenu={showMenu}
+          isActive={isActive.includes(4)}
+          onToggleStatus={() => onToggleStatus(4)}
+          onEdit={() => onEdit(2)}
+        >
+          <OverviewItemWithIcon items={data?.benefits} />
+        </OverviewSection>
+      )}
 
       {/* Ayurvedic Properties */}
-      <OverviewSection
-        title="Ayurvedic Properties"
-        withDivider
-        step={3}
-        showMenu={showMenu}
-        isActive={isActive.includes(5)}
-        onToggleStatus={() => onToggleStatus(5)}
-        onEdit={() => onEdit(3)}
-      >
-        <ul className="list-disc list-inside ml-3 text-xl font-medium space-y-4">
-          <li>Rasa - {data?.ayurvedicProperties?.rasa}</li>
-          <li>Veerya - {data?.ayurvedicProperties?.veerya}</li>
-          <li>Guna - {data?.ayurvedicProperties?.guna}</li>
-          <li>Vipaka - {data?.ayurvedicProperties?.vipaka}</li>
-        </ul>
-      </OverviewSection>
+      {data?.ayurvedicProperties &&
+        (data.ayurvedicProperties.rasa ||
+          data.ayurvedicProperties.veerya ||
+          data.ayurvedicProperties.guna ||
+          data.ayurvedicProperties.vipaka) && (
+          <OverviewSection
+            title="Ayurvedic Properties"
+            withDivider
+            step={3}
+            showMenu={showMenu}
+            isActive={isActive.includes(5)}
+            onToggleStatus={() => onToggleStatus(5)}
+            onEdit={() => onEdit(3)}
+          >
+            <ul className="list-disc list-inside ml-3 text-xl font-medium space-y-4">
+              <li>Rasa - {data?.ayurvedicProperties?.rasa}</li>
+              <li>Veerya - {data?.ayurvedicProperties?.veerya}</li>
+              <li>Guna - {data?.ayurvedicProperties?.guna}</li>
+              <li>Vipaka - {data?.ayurvedicProperties?.vipaka}</li>
+            </ul>
+          </OverviewSection>
+        )}
 
       {/* Important Formulations */}
-      <OverviewSection
-        title="Important Formulations"
-        withDivider
-        step={3}
-        showMenu={showMenu}
-        isActive={isActive.includes(6)}
-        onToggleStatus={() => onToggleStatus(6)}
-        onEdit={() => onEdit(3)}
-      >
-        <OverviewItemWithIcon items={data?.importantFormulations} />
-      </OverviewSection>
+      {data?.importantFormulations && data.importantFormulations.length > 0 && (
+        <OverviewSection
+          title="Important Formulations"
+          withDivider
+          step={3}
+          showMenu={showMenu}
+          isActive={isActive.includes(6)}
+          onToggleStatus={() => onToggleStatus(6)}
+          onEdit={() => onEdit(3)}
+        >
+          <OverviewItemWithIcon items={data?.importantFormulations} />
+        </OverviewSection>
+      )}
 
       {/* Therapeutic Uses */}
-      <OverviewSection
-        title="Therapeutic Uses"
-        withDivider
-        step={3}
-        showMenu={showMenu}
-        isActive={isActive.includes(7)}
-        onToggleStatus={() => onToggleStatus(7)}
-        onEdit={() => onEdit(3)}
-      >
-        <OverviewList items={data?.therapeuticUses} />
-      </OverviewSection>
+      {data?.therapeuticUses && data.therapeuticUses.length > 0 && (
+        <OverviewSection
+          title="Therapeutic Uses"
+          withDivider
+          step={3}
+          showMenu={showMenu}
+          isActive={isActive.includes(7)}
+          onToggleStatus={() => onToggleStatus(7)}
+          onEdit={() => onEdit(3)}
+        >
+          <OverviewList items={data?.therapeuticUses} />
+        </OverviewSection>
+      )}
 
       {/* Plant Parts and Its Purpose */}
-      <OverviewSection
-        title="Plant Parts and Its Purpose"
-        withDivider
-        step={4}
-        showMenu={showMenu}
-        isActive={isActive.includes(8)}
-        onToggleStatus={() => onToggleStatus(8)}
-        onEdit={() => onEdit(4)}
-      >
-        <ul className="list-disc list-inside ml-3 text-xl font-medium space-y-4">
-          {data?.plantParts?.map((item, index) => (
-            <li key={index}>
-              {item?.plantPart} - {item?.description}
-            </li>
-          ))}
-        </ul>
-      </OverviewSection>
+      {data?.plantParts && data.plantParts.length > 0 && (
+        <OverviewSection
+          title="Plant Parts and Its Purpose"
+          withDivider
+          step={4}
+          showMenu={showMenu}
+          isActive={isActive.includes(8)}
+          onToggleStatus={() => onToggleStatus(8)}
+          onEdit={() => onEdit(4)}
+        >
+          <ul className="list-disc list-inside ml-3 text-xl font-medium space-y-4">
+            {data?.plantParts?.map((item, index) => (
+              <li key={index}>
+                {item?.plantPart} - {item?.description}
+              </li>
+            ))}
+          </ul>
+        </OverviewSection>
+      )}
 
       {/* Best Combined With */}
-      <OverviewSection
-        title="Best Combined With"
-        withDivider
-        step={4}
-        showMenu={showMenu}
-        isActive={isActive.includes(9)}
-        onToggleStatus={() => onToggleStatus(9)}
-        onEdit={() => onEdit(4)}
-      >
-        <p className="text-xl font-medium">{data?.bestCombinedWith}</p>
-      </OverviewSection>
+      {data?.bestCombinedWith && (
+        <OverviewSection
+          title="Best Combined With"
+          withDivider
+          step={4}
+          showMenu={showMenu}
+          isActive={isActive.includes(9)}
+          onToggleStatus={() => onToggleStatus(9)}
+          onEdit={() => onEdit(4)}
+        >
+          <p className="text-xl font-medium">{data?.bestCombinedWith}</p>
+        </OverviewSection>
+      )}
 
       {/* Geographical Locations */}
-      <OverviewSection
-        title="Geographical Locations"
-        step={4}
-        showMenu={showMenu}
-        isActive={isActive.includes(10)}
-        onToggleStatus={() => onToggleStatus(10)}
-        onEdit={() => onEdit(4)}
-      >
-        <p className="text-xl font-medium">{data?.geographicalLocations}</p>
-      </OverviewSection>
+      {data?.geographicalLocations && (
+        <OverviewSection
+          title="Geographical Locations"
+          step={4}
+          showMenu={showMenu}
+          isActive={isActive.includes(10)}
+          onToggleStatus={() => onToggleStatus(10)}
+          onEdit={() => onEdit(4)}
+        >
+          <p className="text-xl font-medium">{data?.geographicalLocations}</p>
+        </OverviewSection>
+      )}
     </div>
   );
 }
