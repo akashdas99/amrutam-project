@@ -13,6 +13,7 @@ import { OverviewSection } from "./overviewSection";
 import { PropertiesFormData } from "./properties";
 import IngredientDropdownMenu from "../ui/dropdownMenu";
 import { useStepStoreSelector } from "@/store/stepStore";
+import { filterEmpty } from "@/lib/utils";
 
 export type OverviewFormData = GeneralInfoFormData &
   BenefitsFormData &
@@ -125,7 +126,7 @@ export default function Overview({ ref, showMenu = false }: OverviewProps) {
       </section>
 
       {/* Why To Use */}
-      {data?.whyToUse && data.whyToUse.length > 0 && (
+      {data?.whyToUse && filterEmpty(data.whyToUse).length > 0 && (
         <OverviewSection
           title={`Why ${data?.ingredientName} ?`}
           withDivider
@@ -171,7 +172,7 @@ export default function Overview({ ref, showMenu = false }: OverviewProps) {
         )}
 
       {/* Benefits */}
-      {data?.benefits && data.benefits.length > 0 && (
+      {data?.benefits && filterEmpty(data?.benefits).length > 0 && (
         <OverviewSection
           title="Benefits"
           withDivider
@@ -210,34 +211,36 @@ export default function Overview({ ref, showMenu = false }: OverviewProps) {
         )}
 
       {/* Important Formulations */}
-      {data?.importantFormulations && data.importantFormulations.length > 0 && (
-        <OverviewSection
-          title="Important Formulations"
-          withDivider
-          step={3}
-          showMenu={showMenu}
-          isActive={isActive.includes(6)}
-          onToggleStatus={() => onToggleStatus(6)}
-          onEdit={() => onEdit(3)}
-        >
-          <OverviewItemWithIcon items={data?.importantFormulations} />
-        </OverviewSection>
-      )}
+      {data?.importantFormulations &&
+        filterEmpty(data?.importantFormulations).length > 0 && (
+          <OverviewSection
+            title="Important Formulations"
+            withDivider
+            step={3}
+            showMenu={showMenu}
+            isActive={isActive.includes(6)}
+            onToggleStatus={() => onToggleStatus(6)}
+            onEdit={() => onEdit(3)}
+          >
+            <OverviewItemWithIcon items={data?.importantFormulations} />
+          </OverviewSection>
+        )}
 
       {/* Therapeutic Uses */}
-      {data?.therapeuticUses && data.therapeuticUses.length > 0 && (
-        <OverviewSection
-          title="Therapeutic Uses"
-          withDivider
-          step={3}
-          showMenu={showMenu}
-          isActive={isActive.includes(7)}
-          onToggleStatus={() => onToggleStatus(7)}
-          onEdit={() => onEdit(3)}
-        >
-          <OverviewList items={data?.therapeuticUses} />
-        </OverviewSection>
-      )}
+      {data?.therapeuticUses &&
+        filterEmpty(data.therapeuticUses).length > 0 && (
+          <OverviewSection
+            title="Therapeutic Uses"
+            withDivider
+            step={3}
+            showMenu={showMenu}
+            isActive={isActive.includes(7)}
+            onToggleStatus={() => onToggleStatus(7)}
+            onEdit={() => onEdit(3)}
+          >
+            <OverviewList items={data?.therapeuticUses} />
+          </OverviewSection>
+        )}
 
       {/* Plant Parts and Its Purpose */}
       {data?.plantParts && data.plantParts.length > 0 && (

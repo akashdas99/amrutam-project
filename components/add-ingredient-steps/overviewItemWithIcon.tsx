@@ -14,20 +14,22 @@ export function OverviewItemWithIcon({ items }: OverviewItemWithIconProps) {
 
   return (
     <div className="space-y-3">
-      {items.map((item, index) => (
-        <div key={index} className="flex items-center gap-3">
-          {item.image && (
-            <Image
-              src={item.image}
-              alt=""
-              width={35}
-              height={35}
-              className="w-[35px] h-[35px] object-contain"
-            />
-          )}
-          <p className="text-xl font-medium">{item.description}</p>
-        </div>
-      ))}
+      {items
+        ?.filter(({ image, description }) => image || description)
+        .map((item, index) => (
+          <div key={index} className="flex items-center gap-3">
+            {item.image && (
+              <Image
+                src={item.image}
+                alt=""
+                width={35}
+                height={35}
+                className="w-[35px] h-[35px] object-contain"
+              />
+            )}
+            <p className="text-xl font-medium">{item.description}</p>
+          </div>
+        ))}
     </div>
   );
 }

@@ -7,9 +7,11 @@ export function OverviewList({ items }: OverviewListProps) {
 
   return (
     <ul className="list-disc list-inside ml-3 text-xl font-medium space-y-4">
-      {items.map((item, index) => (
-        <li key={index}>{item.description}</li>
-      ))}
+      {items
+        ?.filter(({ description }) => description)
+        ?.map((item, index) => (
+          <li key={index}>{item.description}</li>
+        ))}
     </ul>
   );
 }
