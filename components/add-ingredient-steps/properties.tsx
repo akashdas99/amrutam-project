@@ -83,7 +83,7 @@ export default function Properties({ ref }: PropertiesProps) {
   );
 
   return (
-    <form className="bg-foreground p-6 rounded-2xl flex flex-col gap-6">
+    <div className="bg-foreground p-6 rounded-2xl flex flex-col gap-6">
       <h1 className="text-[18px] font-semibold">Ayurvedic Properties</h1>
 
       <div className="grid grid-cols-2 gap-4">
@@ -187,6 +187,6 @@ export default function Properties({ ref }: PropertiesProps) {
           Add Another items
         </button>
       </div>
-    </form>
+    </div>
   );
 }

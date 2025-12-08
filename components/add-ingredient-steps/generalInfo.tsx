@@ -58,7 +58,7 @@ export default function GeneralInfo({ ref }: GeneralInfoProps) {
   );
 
   return (
-    <form className="bg-foreground p-6 rounded-2xl flex flex-col gap-6">
+    <div className="bg-foreground p-6 rounded-2xl flex flex-col gap-6">
       <h1 className="text-[18px] font-semibold">General Information</h1>
       <div className="flex gap-5">
         <Input
@@ -93,6 +93,6 @@ export default function GeneralInfo({ ref }: GeneralInfoProps) {
         control={control}
         error={errors?.image?.message}
       />
-    </form>
+    </div>
   );
 }

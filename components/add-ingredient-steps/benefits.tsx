@@ -86,7 +86,7 @@ export default function Benefits({ ref }: BenefitsProps) {
   );
 
   return (
-    <form className="bg-foreground p-6 rounded-2xl flex flex-col gap-6">
+    <div className="bg-foreground p-6 rounded-2xl flex flex-col gap-6">
       <h1 className="text-[18px] font-semibold">Why To use?</h1>
 
       <div className="flex flex-col gap-3">
@@ -217,6 +217,6 @@ export default function Benefits({ ref }: BenefitsProps) {
           Add Another items
         </button>
       </div>
-    </form>
+    </div>
   );
 }

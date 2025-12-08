@@ -21,7 +21,7 @@ export type PlantPartData = z.infer<typeof plantPartSchema>;
 const othersSchema = z.object({
   plantParts: z
     .array(plantPartSchema)
-    .min(1, "At least one plant part is required"),
+    .min(1, ERROR_MESSAGE.PLANT_PART_REQUIRED),
   bestCombinedWith: z
     .string()
     .min(1, ERROR_MESSAGE.BEST_COMBINED_WITH_REQUIRED),
@@ -94,7 +94,7 @@ export default function Others({ ref }: OthersProps) {
   };
 
   return (
-    <form className="bg-foreground p-6 rounded-2xl flex flex-col gap-6">
+    <div className="bg-foreground p-6 rounded-2xl flex flex-col gap-6">
       <h1 className="text-[18px] font-semibold">Plant Parts and Its Purpose</h1>
 
       <div className="flex gap-4 items-start">
@@ -171,6 +171,6 @@ export default function Others({ ref }: OthersProps) {
         {...register("geographicalLocations")}
         error={errors.geographicalLocations?.message}
       />
-    </form>
+    </div>
   );
 }
