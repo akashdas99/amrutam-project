@@ -113,9 +113,10 @@ export default function Sidebar() {
     return pathname === href;
   };
 
-  const isSubMenuActive = (subMenu?: SubMenuItem[]) => {
-    if (!subMenu) return false;
-    return subMenu.some((subItem) => pathname === subItem.href);
+  const isSubMenuActive = (item: MenuItem) => {
+    if (!item.subMenu) return false;
+    if (!item.href) return false;
+    return pathname.startsWith(item.href);
   };
 
   return (
@@ -125,9 +126,9 @@ export default function Sidebar() {
         {menuItems?.map((item) => (
           <div key={item.id}>
             <Link
-              href={item.href || "#"}
+              href={"/ingredients"}
               className={`px-4 py-3 flex gap-1.5 items-center cursor-pointer hover:bg-gray/10 rounded-md ${
-                isSubMenuActive(item.subMenu)
+                isSubMenuActive(item)
                   ? " bg-background"
                   : isActive(item.href)
                   ? " bg-background text-secondary"
