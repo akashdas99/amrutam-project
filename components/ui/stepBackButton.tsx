@@ -8,9 +8,9 @@ export default function StepBackButton({ step }: { step: number }) {
   return (
     <Button
       type="button"
-      variant="ghost"
+      variant="secondary"
       outlined
-      className="w-9 h-9 bg-light-gray/50 border-0 rounded-lg"
+      className="w-9 h-9"
       onClick={() => setStep(step)}
     >
       <Image

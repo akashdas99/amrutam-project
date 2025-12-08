@@ -1,10 +1,12 @@
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 import React from "react";
 
 interface InputProps extends React.ComponentProps<"input"> {
   label?: string;
   error?: string;
   required?: boolean;
+  showSearchIcon?: boolean;
 }
 
 export default function Input({
@@ -13,6 +15,7 @@ export default function Input({
   required,
   className = "",
   id,
+  showSearchIcon = false,
   ...props
 }: InputProps) {
   const inputId = id || label?.toLowerCase().replace(/\s+/g, "-");
@@ -28,10 +31,20 @@ export default function Input({
             {required && <span className="text-danger">*</span>}
           </label>
         )}
+        {showSearchIcon && (
+          <Image
+            src={"/images/search.svg"}
+            alt="search"
+            className="absolute left-2 top-1/2 -translate-y-1/2"
+            width={18.5}
+            height={18.5}
+          />
+        )}
         <input
           id={inputId}
           className={cn(
-            `w-full px-4 py-3 border-2 border-light-gray rounded-md focus:outline-none text-xs `,
+            `w-full py-3 border-2 border-light-gray rounded-md focus:outline-none text-xs`,
+            showSearchIcon ? "pl-8 pr-4" : "px-4",
             className
           )}
           placeholder="Type here..."
