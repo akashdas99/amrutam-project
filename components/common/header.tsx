@@ -13,7 +13,9 @@ export default function Header() {
         />
         <div className="flex items-center gap-3 mr-[66px] text-right">
           <div>
-            <div className="text-black font-semibold text-base">John Doe</div>
+            <div className="text-black font-semibold text-base">
+              Liam Michael
+            </div>
             <div className="text-gray font-normal text-[12px]">Admin</div>
           </div>
           <Image

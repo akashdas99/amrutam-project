@@ -20,10 +20,6 @@ export default function IngredientsList() {
   const deferredSearchQuery = useDeferredValue(searchQuery);
   const itemsPerPage = 10;
 
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [deferredSearchQuery]);
-
   const filteredIngredients = MOCK_INGREDIENTS.filter((ingredient) =>
     ingredient.name.toLowerCase().includes(deferredSearchQuery.toLowerCase())
   );
@@ -54,7 +50,10 @@ export default function IngredientsList() {
                   placeholder="Search here"
                   showSearchIcon
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                    setCurrentPage(1);
+                  }}
                   className="flex-1 bg-light-gray/50 border-0 rounded-xl text-sx py-2 text-primary font-medium"
                 />
                 <Button variant="secondary" className="w-9 h-9  rounded-xl">
@@ -158,17 +157,19 @@ export default function IngredientsList() {
               >
                 <ChevronLeft size={10} className="mx-auto" />
               </Button>
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                <Button
-                  key={page}
-                  variant={"ghost"}
-                  className="w-6 h-6 rounded-sm border-primary text-xs text-gray"
-                  outlined={currentPage === page}
-                  onClick={() => setCurrentPage(page)}
-                >
-                  <span className="text-xs">{page}</span>
-                </Button>
-              ))}
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                (page) => (
+                  <Button
+                    key={page}
+                    variant={"ghost"}
+                    className="w-6 h-6 rounded-sm border-primary text-xs text-gray"
+                    outlined={currentPage === page}
+                    onClick={() => setCurrentPage(page)}
+                  >
+                    <span className="text-xs">{page}</span>
+                  </Button>
+                )
+              )}
               <Button
                 variant="ghost"
                 className="w-6 h-6 rounded-xl text-black"

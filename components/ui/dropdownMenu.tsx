@@ -1,8 +1,6 @@
 "use client";
 
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import { cn } from "@/lib/utils";
-import Image from "next/image";
 import { EllipsisVertical } from "lucide-react";
 
 interface DropdownMenuProps {
