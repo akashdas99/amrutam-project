@@ -82,7 +82,7 @@ export default function Benefits({ ref }: BenefitsProps) {
         nextStep();
       }),
     }),
-    []
+    [handleSubmit, updateIngredient, nextStep]
   );
 
   return (

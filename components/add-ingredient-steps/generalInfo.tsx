@@ -54,7 +54,7 @@ export default function GeneralInfo({ ref }: GeneralInfoProps) {
         nextStep();
       }),
     }),
-    []
+    [handleSubmit, updateIngredient, nextStep]
   );
 
   return (

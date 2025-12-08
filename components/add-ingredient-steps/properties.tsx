@@ -79,7 +79,7 @@ export default function Properties({ ref }: PropertiesProps) {
         nextStep();
       }),
     }),
-    []
+    [handleSubmit, updateIngredient, nextStep]
   );
 
   return (

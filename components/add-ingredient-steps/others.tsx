@@ -85,7 +85,7 @@ export default function Others({ ref }: OthersProps) {
         nextStep();
       }),
     }),
-    []
+    [handleSubmit, updateIngredient, nextStep]
   );
 
   const handleAdd = (data: PlantPartData) => {
